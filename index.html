@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo de Adivinhação</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
+        background-size: cover;
+        min-height: 100px;
+ 
+      }
+      .container {
+        text-align: center;
+        background: rgba(250, 151, 4, 0.7);
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        color: #fff;
+        width: 100%;
+        max-width: 400px;
+      }
+      h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: #ffdd57;
+      }
+      input[type="number"] {
+        padding: 10px;
+        font-size: 1.2em;
+        width: 80%;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+      }
+      button {
+        background-color: #ff6f61;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #ff8c7b;
+      }
+      #resultado {
+        margin-top: 20px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ffdd57;
+      }
+      footer {
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <audio autoplay loop>
+      <source src="media/music.mp3" type="audio/mpeg" />
+      </audio>
+      <h1>&#x1F3AE; JOK-E-POW</h1>
+      <h2>&#x1F525; Preparado para o duelo!</h2>
+      <p>Vamos jogar!</p>
+      <p>Escolha seu golpe com sabedoria:</p>
+      <ul>
+        <li>1 = Papel</li>
+        <li>2 = Pedra</li>
+        <li>3 = Tesoura</li>
+      </ul>
+      <p><strong>&#x2694;&#xFE0FRegras do combate:</strong></p>
+      <ul>
+        <li>Papel embrulha a pedra &#x1F9FB;&#x1F4AA;</li>
+        <li>Pedra esmaga a tesoura&#x1FAA8;&#x2702;</li>
+        <li>Tesoura corta o papel&#x2702;&#x1F4C4;</li>
+      </ul>
+      <input type="number" id="palpite" min="1" max="10" />
+      <button onclick="enviarPalpite()">Enviar</button>
+      <div id="resultado"></div>
+      <footer>
+        <p>Criadora Sabrina Rodrigues</p>
+      </footer>
+    </div>
+
+    <script>
+      function enviarPalpite() {
+        const palpite = document.getElementById("palpite").value;
+
+        // Substitua pela URL real da sua API
+        const url = "https://sua-api.com/adivinha?palpite=" + encodeURIComponent(palpite);
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro na resposta da API");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            document.getElementById("resultado").innerText =
+              "Resultado: " + data.resultado;
+          })
+          .catch((error) => {
+            document.getElementById("resultado").innerText =
+              "Erro ao comunicar com a API.";
+            console.error(error);
+          });
+      }
+    </script>
+  </body>
+</html>
