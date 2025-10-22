@@ -1,210 +1,202 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JOK-E-POW</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
-      background-size: cover;
-    }
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo JOK-E-POW 🎮</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
+        background-size: cover;
+        background-position: center;
+      }
 
-    .container {
-      text-align: center;
-      background: rgba(250, 151, 4, 0.8);
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      color: #fff;
-      width: 100%;
-      max-width: 400px;
-    }
+      .container {
+        text-align: center;
+        background: rgba(250, 151, 4, 0.7);
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        color: #fff;
+        width: 100%;
+        max-width: 400px;
+      }
 
-    h2, h3 {
-      margin: 10px 0;
-    }
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 10px;
+        color: #ffdd57;
+      }
 
-    button {
-      background-color: #ff6f61;
-      color: white;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 10px;
-    }
+      h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        color: #fff;
+      }
 
-    button:hover {
-      background-color: #ff8c7b;
-    }
+      input[type="number"] {
+        padding: 10px;
+        font-size: 1.2em;
+        width: 80%;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+      }
 
-    #placar {
-      margin-top: 20px;
-      font-size: 1.2em;
-    }
+      button {
+        background-color: #ff6f61;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 5px;
+      }
 
-    #placar span {
-      font-weight: bold;
-      color: #ffdd57;
-    }
+      button:hover {
+        background-color: #ff8c7b;
+      }
 
-    #sequencia {
-      font-size: 2em;
-      margin: 20px 0;
-      animation: fade 1s ease-in-out;
-    }
+      #resultado {
+        margin-top: 20px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ffdd57;
+      }
 
-    @keyframes fade {
-      0% { opacity: 0; }
-      50% { opacity: 1; }
-      100% { opacity: 0; }
-    }
+      footer {
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #ddd;
+      }
+    </style>
+  </head>
 
-    footer {
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #ddd;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <audio id="bgm" loop>
-      <source src="media/music.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="winSound" src="media/win.mp3"></audio>
-    <audio id="loseSound" src="media/lose.mp3"></audio>
+  <body>
+    <div class="container">
+      <audio id="bgm" loop>
+        <source src="media/music.mp3" type="audio/mpeg" />
+      </audio>
 
-    <button onclick="startGame()">🎮 Começar Jogo</button>
+      <h1>🎮 JOK-E-POW</h1>
+      <h2>🔥 Preparado para o duelo!</h2>
+      <h3>Vamos jogar!</h3>
 
-    <h1>🎮 JOK-E-POW</h1>
-    <h2>🔥 Preparado para o duelo!</h2>
-    <h3>Vamos jogar!</h3>
+      <p><strong>Escolha seu golpe com sabedoria:</strong></p>
+      <p>1 = Papel 📄</p>
+      <p>2 = Pedra 🪨</p>
+      <p>3 = Tesoura ✂️</p>
 
-    <p><strong>Escolha seu golpe com sabedoria:</strong></p>
-    <p>1 = Papel 📄</p>
-    <p>2 = Pedra 🪨</p>
-    <p>3 = Tesoura ✂️</p>
+      <p><strong>⚔️ Regras do combate:</strong></p>
+      <p>Papel embrulha a pedra 📄🪨</p>
+      <p>Pedra esmaga a tesoura 🪨✂️</p>
+      <p>Tesoura corta o papel ✂️📄</p>
 
-    <p><strong>⚔️ Regras do combate:</strong></p>
-    <p>Papel embrulha a pedra 📄 🪨</p>
-    <p>Pedra esmaga a tesoura 🪨 ✂️</p>
-    <p>Tesoura corta o papel ✂️ 📄</p>
+      <button onclick="startGame()">🎵 Tocar Música</button>
+      <button onclick="jogar()">🎯 Começar Jogo</button>
 
-    <div id="sequencia"></div>
+      <div id="resultado"></div>
 
-    <div id="placar">
-      <p>🥇 Vitórias: <span id="vitorias">0</span></p>
-      <p>🤝 Empates: <span id="empates">0</span></p>
-      <p>💔 Derrotas: <span id="derrotas">0</span></p>
+      <footer>
+        <p>👩‍💻 Criadora: <strong>Sabrina Rodrigues</strong></p>
+      </footer>
     </div>
 
-    <footer>
-      <p>Criadora Sabrina Rodrigues</p>
-    </footer>
-  </div>
+    <script>
+      function startGame() {
+        const audio = document.getElementById("bgm");
+        audio.play();
+        alert("🎶 Música iniciada! Boa sorte no duelo!");
+      }
 
-  <script>
-    const pedra = "🪨";
-    const papel = "📄";
-    const tesoura = "✂️";
+      const pedra = "🪨";
+      const papel = "📄";
+      const tesoura = "✂️";
 
-    const vitoriaEmoji = "🥇";
-    const empateEmoji = "🤝";
-    const derrotaEmoji = "💔";
+      const vitoriaEmoji = "🥇";
+      const empateEmoji = "🤝";
+      const derrotaEmoji = "💔";
 
-    const itens = [
-      { nome: "Papel", emoji: papel },
-      { nome: "Pedra", emoji: pedra },
-      { nome: "Tesoura", emoji: tesoura }
-    ];
+      const itens = [
+        { nome: "Pedra", emoji: pedra },
+        { nome: "Papel", emoji: papel },
+        { nome: "Tesoura", emoji: tesoura },
+      ];
 
-    let vitorias = 0;
-    let empates = 0;
-    let derrotas = 0;
+      let vitorias = 0;
+      let empates = 0;
+      let derrotas = 0;
 
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
 
-    async function mostrarSequencia(texto) {
-      const el = document.getElementById("sequencia");
-      el.textContent = texto;
-      el.style.animation = "fade 1s ease-in-out";
-      await sleep(1000);
-    }
+      async function jogar() {
+        while (true) {
+          const jogador = parseInt(
+            prompt(
+              `Suas opções:\n[1] ${pedra} Pedra\n[2] ${papel} Papel\n[3] ${tesoura} Tesoura\n\nQual é a sua jogada?`
+            )
+          );
 
-    function atualizarPlacar() {
-      document.getElementById("vitorias").textContent = vitorias;
-      document.getElementById("empates").textContent = empates;
-      document.getElementById("derrotas").textContent = derrotas;
-    }
+          if (![1, 2, 3].includes(jogador)) {
+            alert("🚫 Jogada inválida! Escolha 1, 2 ou 3.");
+            continue;
+          }
 
-    async function jogar() {
-      while (true) {
-        const jogador = parseInt(prompt(
-          `Suas opções:\n[1] ${papel} Papel\n[2] ${pedra} Pedra\n[3] ${tesoura} Tesoura\n\nQual é a sua jogada?`
-        ));
+          const computador = Math.floor(Math.random() * 3) + 1;
 
-        if (![1, 2, 3].includes(jogador)) {
-          alert("Jogada inválida!");
-          continue;
-        }
+          alert("JO!");
+          await sleep(800);
+          alert("KEN!");
+          await sleep(800);
+          alert("PÔ!!!");
 
-        const computador = Math.floor(Math.random() * 3) + 1;
+          alert(
+            `Você jogou ${itens[jogador - 1].emoji} ${itens[jogador - 1].nome}`
+          );
+          alert(
+            `Computador jogou ${itens[computador - 1].emoji} ${itens[computador - 1].nome}`
+          );
 
-        await mostrarSequencia("JO");
-        await mostrarSequencia("KEN");
-        await mostrarSequencia("PÔ!!!");
+          if (jogador === computador) {
+            alert(`${empateEmoji} Empate!`);
+            empates++;
+          } else if (
+            (jogador === 1 && computador === 3) ||
+            (jogador === 2 && computador === 1) ||
+            (jogador === 3 && computador === 2)
+          ) {
+            alert(`${vitoriaEmoji} Você venceu!`);
+            vitorias++;
+          } else {
+            alert(`${derrotaEmoji} Computador venceu!`);
+            derrotas++;
+          }
 
-        alert(`Você jogou ${itens[jogador - 1].emoji} ${itens[jogador - 1].nome}`);
-        alert(`Computador jogou ${itens[computador - 1].emoji} ${itens[computador - 1].nome}`);
-
-        if (jogador === computador) {
-          alert("Empate!");
-          empates++;
-        } else if (
-          (jogador === 1 && computador === 2) ||
-          (jogador === 2 && computador === 3) ||
-          (jogador === 3 && computador === 1)
-        ) {
-          alert("Você ganhou!");
-          vitorias++;
-          document.getElementById("winSound").play();
-        } else {
-          alert("Computador ganhou!");
-          derrotas++;
-          document.getElementById("loseSound").play();
-        }
-
-        atualizarPlacar();
-
-        const continuar = prompt("Mais uma partida? [S/N]").toUpperCase();
-        if (continuar === "N") {
-          alert("Obrigado por jogar! Até a próxima.");
-          alert(`🏁 Placar final:\n${vitoriaEmoji} Vitórias: ${vitorias}\n${empateEmoji} Empates: ${empates}\n${derrotaEmoji} Derrotas: ${derrotas}`);
-          break;
-        } else if (continuar !== "S") {
-          alert("ERRO! Resposta inválida. Por favor, responda com 'S' ou 'N'.");
+          const continuar = prompt("Quer jogar novamente? [S/N]").toUpperCase();
+          if (continuar === "N") {
+            alert("🏁 Fim de jogo! Obrigado por jogar 💕");
+            alert(
+              `Placar final:\n${vitoriaEmoji} Vitórias: ${vitorias}\n${empateEmoji} Empates: ${empates}\n${derrotaEmoji} Derrotas: ${derrotas}`
+            );
+            break;
+          } else if (continuar !== "S") {
+            alert("Por favor, responda apenas com S ou N 💬");
+          }
         }
       }
-    }
-
-    function startGame() {
-      document.getElementById("bgm").play();
-      jogar();
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
