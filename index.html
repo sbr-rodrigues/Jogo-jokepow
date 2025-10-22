@@ -1,127 +1,211 @@
 <!DOCTYPE html>
-<html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jogo de Adivinhação</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(to right, #4facfe, #00f2fe);
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
-        background-size: cover;
-        min-height: 100px;
- 
-      }
-      .container {
-        text-align: center;
-        background: rgba(250, 151, 4, 0.7);
-        border-radius: 10px;
-        padding: 40px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        color: #fff;
-        width: 100%;
-        max-width: 400px;
-      }
-      h2 {
-        font-size: 2em;
-        margin-bottom: 20px;
-        color: #ffdd57;
-      }
-      input[type="number"] {
-        padding: 10px;
-        font-size: 1.2em;
-        width: 80%;
-        margin-bottom: 20px;
-        border: none;
-        border-radius: 5px;
-        text-align: center;
-      }
-      button {
-        background-color: #ff6f61;
-        color: white;
-        padding: 15px 30px;
-        font-size: 1.2em;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      button:hover {
-        background-color: #ff8c7b;
-      }
-      #resultado {
-        margin-top: 20px;
-        font-size: 1.5em;
-        font-weight: bold;
-        color: #ffdd57;
-      }
-      footer {
-        margin-top: 30px;
-        font-size: 0.9em;
-        color: #ddd;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <audio autoplay loop>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOK-E-POW</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(250, 151, 4, 0.8);
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2, h3 {
+      margin: 10px 0;
+    }
+
+    button {
+      background-color: #ff6f61;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #ff8c7b;
+    }
+
+    #placar {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    #placar span {
+      font-weight: bold;
+      color: #ffdd57;
+    }
+
+    #sequencia {
+      font-size: 2em;
+      margin: 20px 0;
+      animation: fade 1s ease-in-out;
+    }
+
+    @keyframes fade {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <audio id="bgm" loop>
       <source src="media/music.mp3" type="audio/mpeg" />
-      </audio>
-      <h1>&#x1F3AE; JOK-E-POW</h1>
-      <h2>&#x1F525; Preparado para o duelo!</h2>
-      <p>Vamos jogar!</p>
-      <p>Escolha seu golpe com sabedoria:</p>
-      <ul>
-        <li>1 = Papel</li>
-        <li>2 = Pedra</li>
-        <li>3 = Tesoura</li>
-      </ul>
-      <p><strong>&#x2694;&#xFE0FRegras do combate:</strong></p>
-      <ul>
-        <li>Papel embrulha a pedra &#x1F9FB; &#x1F4AA;</li>
-        <li>Pedra esmaga a tesoura &#x1FAA8; &#x2702;</li>
-        <li>Tesoura corta o papel &#x2702; &#x1F4C4;</li>
-      </ul>
-      <input type="number" id="palpite" min="1" max="10" />
-      <button onclick="enviarPalpite()">Enviar</button>
-      <div id="resultado"></div>
-      <footer>
-        <p>Criadora Sabrina Rodrigues</p>
-      </footer>
+    </audio>
+    <audio id="winSound" src="media/win.mp3"></audio>
+    <audio id="loseSound" src="media/lose.mp3"></audio>
+
+    <button onclick="startGame()">🎮 Começar Jogo</button>
+
+    <h1>🎮 JOK-E-POW</h1>
+    <h2>🔥 Preparado para o duelo!</h2>
+    <h3>Vamos jogar!</h3>
+
+    <p><strong>Escolha seu golpe com sabedoria:</strong></p>
+    <p>1 = Papel 📄</p>
+    <p>2 = Pedra 🪨</p>
+    <p>3 = Tesoura ✂️</p>
+
+    <p><strong>⚔️ Regras do combate:</strong></p>
+    <p>Papel embrulha a pedra 📄 🪨</p>
+    <p>Pedra esmaga a tesoura 🪨 ✂️</p>
+    <p>Tesoura corta o papel ✂️ 📄</p>
+
+    <div id="sequencia"></div>
+
+    <div id="placar">
+      <p>🥇 Vitórias: <span id="vitorias">0</span></p>
+      <p>🤝 Empates: <span id="empates">0</span></p>
+      <p>💔 Derrotas: <span id="derrotas">0</span></p>
     </div>
 
-    <script>
-      function enviarPalpite() {
-        const palpite = document.getElementById("palpite").value;
+    <footer>
+      <h6>VAMOS JOGAR!!!</h6>
+      <p>Criadora Sabrina Rodrigues</p>
+    </footer>
+  </div>
 
-        // Substitua pela URL real da sua API
-        const url = "https://sua-api.com/adivinha?palpite=" + encodeURIComponent(palpite);
+  <script>
+    const pedra = "🪨";
+    const papel = "📄";
+    const tesoura = "✂️";
 
-        fetch(url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Erro na resposta da API");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            document.getElementById("resultado").innerText =
-              "Resultado: " + data.resultado;
-          })
-          .catch((error) => {
-            document.getElementById("resultado").innerText =
-              "Erro ao comunicar com a API.";
-            console.error(error);
-          });
+    const vitoriaEmoji = "🥇";
+    const empateEmoji = "🤝";
+    const derrotaEmoji = "💔";
+
+    const itens = [
+      { nome: "Papel", emoji: papel },
+      { nome: "Pedra", emoji: pedra },
+      { nome: "Tesoura", emoji: tesoura }
+    ];
+
+    let vitorias = 0;
+    let empates = 0;
+    let derrotas = 0;
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function mostrarSequencia(texto) {
+      const el = document.getElementById("sequencia");
+      el.textContent = texto;
+      el.style.animation = "fade 1s ease-in-out";
+      await sleep(1000);
+    }
+
+    function atualizarPlacar() {
+      document.getElementById("vitorias").textContent = vitorias;
+      document.getElementById("empates").textContent = empates;
+      document.getElementById("derrotas").textContent = derrotas;
+    }
+
+    async function jogar() {
+      while (true) {
+        const jogador = parseInt(prompt(
+          `Suas opções:\n[1] ${papel} Papel\n[2] ${pedra} Pedra\n[3] ${tesoura} Tesoura\n\nQual é a sua jogada?`
+        ));
+
+        if (![1, 2, 3].includes(jogador)) {
+          alert("Jogada inválida!");
+          continue;
+        }
+
+        const computador = Math.floor(Math.random() * 3) + 1;
+
+        await mostrarSequencia("JO");
+        await mostrarSequencia("KEN");
+        await mostrarSequencia("PÔ!!!");
+
+        alert(`Você jogou ${itens[jogador - 1].emoji} ${itens[jogador - 1].nome}`);
+        alert(`Computador jogou ${itens[computador - 1].emoji} ${itens[computador - 1].nome}`);
+
+        if (jogador === computador) {
+          alert("Empate!");
+          empates++;
+        } else if (
+          (jogador === 1 && computador === 2) ||
+          (jogador === 2 && computador === 3) ||
+          (jogador === 3 && computador === 1)
+        ) {
+          alert("Você ganhou!");
+          vitorias++;
+          document.getElementById("winSound").play();
+        } else {
+          alert("Computador ganhou!");
+          derrotas++;
+          document.getElementById("loseSound").play();
+        }
+
+        atualizarPlacar();
+
+        const continuar = prompt("Mais uma partida? [S/N]").toUpperCase();
+        if (continuar === "N") {
+          alert("Obrigado por jogar! Até a próxima.");
+          alert(`🏁 Placar final:\n${vitoriaEmoji} Vitórias: ${vitorias}\n${empateEmoji} Empates: ${empates}\n${derrotaEmoji} Derrotas: ${derrotas}`);
+          break;
+        } else if (continuar !== "S") {
+          alert("ERRO! Resposta inválida. Por favor, responda com 'S' ou 'N'.");
+        }
       }
-    </script>
-  </body>
+    }
 
+    function startGame() {
+      document.getElementById("bgm").play();
+      jogar();
+    }
+  </script>
+</body>
 </html>
