@@ -16,6 +16,7 @@
       justify-content: center;
       align-items: center;
       background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
+      background-size: cover;
     }
     .container {
       text-align: center;
@@ -28,15 +29,15 @@
       max-width: 400px;
     }
     hr {
-        height: 2px;
-        background-color: rgb(252, 251, 255);
-        border-color: rgb(240, 240, 245);
+      height: 2px;
+      background-color: rgb(252, 251, 255);
+      border-color: rgb(240, 240, 245);
     }
     h1 {
-        font-size: 60px;
-        margin-top: 0;
-        margin-bottom: 15px;
-        text-align: center;
+      font-size: 60px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: center;
     }
     h2 {
       font-size: 2em;
@@ -44,17 +45,8 @@
       color: #ffdd57;
     }
     h3, p {
-        margin: 1em auto;
-    color: white;
-    }
-    input[type="number"] {
-      padding: 10px;
-      font-size: 1.2em;
-      width: 80%;
-      margin-bottom: 20px;
-      border: none;
-      border-radius: 5px;
-      text-align: center;
+      margin: 1em auto;
+      color: white;
     }
     button {
       background-color: #ff6f61;
@@ -64,6 +56,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      margin: 8px;
       transition: background-color 0.3s ease;
     }
     button:hover {
@@ -85,140 +78,74 @@
 <body>
   <div class="container">
     
-    <audio id="music" src="media/music.mp3" loop type="audio/mpeg" /></audio>
-    <audio id="winSound" src="media/win.mp3" type="audio/mpeg" /></audio>
-    <audio id="loseSound" src="media/lose.mp3" type="audio/mpeg" /></audio>
+    <audio id="music" src="media/music.mp3" loop></audio>
+    <audio id="winSound" src="media/win.mp3"></audio>
+    <audio id="loseSound" src="media/lose.mp3"></audio>
   
-    <h1>&#x1F3AE; JOK-E-POW</h1>
-    <h2>&#x1F525; Preparado para o duelo!</h2>
+    <h1>🎮 JOK-E-POW</h1>
+    <h2>🔥 Preparado para o duelo!</h2>
     <hr>
-      <p>Escolha seu golpe com sabedoria:</p>
-      <p>1 = Pedra&#x1FAA8;</p>
-      <p>2 = Papel&#x1F4C4;</p>      
-      <p>3 = Tesoura&#x2702;</p>    
+    <p>Escolha seu golpe com sabedoria:</p>
+    <p>1 = Pedra 🪨</p>
+    <p>2 = Papel 📄</p>
+    <p>3 = Tesoura ✂️</p>
     <hr>
-     <p><strong>&#x2694;&#xFE0FRegras do combate:</strong></p>
-      <p>Papel embrulha a pedra&#x1F4C4;&#x1FAA8;</p>
-      <p>Pedra esmaga a tesoura&#x1FAA8;&#x2702;</p>
-      <p>Tesoura corta o papel&#x2702;&#x1F4C4;</p>
+    <p><strong>⚔️ Regras do combate:</strong></p>
+    <p>Papel embrulha a pedra 📄🪨</p>
+    <p>Pedra esmaga a tesoura 🪨✂️</p>
+    <p>Tesoura corta o papel ✂️📄</p>
     <hr>
     <h3>Vamos jogar!</h3>
-    <button onclick="jogar(1)">("\u{1FAA8}"); Pedra</button>
-    <button onclick="jogar(2)">("\u{1F4C4}"); Papel</button>
-    <button onclick="jogar(3)">"(\u2702)"; Tesoura</button>
+
+    <button onclick="jogar(1)">🪨 Pedra</button>
+    <button onclick="jogar(2)">📄 Papel</button>
+    <button onclick="jogar(3)">✂️ Tesoura</button>
   
     <div id="resultado"></div>
+
     <footer>
-    <h3>Divirta se!</h3>
-    <p>\U0001F60E SABRINA RODRIGUES \U0001F60E</p>
+      <h3>Divirta-se!</h3>
+      <p>😎 SABRINA RODRIGUES 😎</p>
     </footer>
-    </div>
+  </div>
 
   <script>
-    const readline = require("readline");
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+    const music = document.getElementById("music");
+    const winSound = document.getElementById("winSound");
+    const loseSound = document.getElementById("loseSound");
 
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-    const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-    const pedra = ("\u{1FAA8}");
-    const papel = ("\u{1F4C4}");
-    const tesoura = "(\u2702)";
-    const vitoriaEmoji = "(\u{1F947})";
-    const empateEmoji = "(\u{1F91D})";
-    const derrotaEmoji = "(\u{1F494})";
-
-    const itens = [
-        ["Pedra", pedra],
-        ["Papel", papel],
-        ["Tesoura", tesoura]
-    ];
-
-    let empates = 0;
-    let vitorias = 0;
-    let derrotas = 0;
-
-    let music = document.getElementById("music");
-    let winSound = document.getElementById("winSound");
-    let loseSound = document.getElementById("loseSound");
-
-     document.body.addEventListener("click", () => {
+    // Toca a música de fundo ao primeiro clique
+    document.body.addEventListener("click", () => {
       if (music.paused) music.play();
     }, { once: true });
 
-    const perguntar = (texto) => new Promise(resolve => rl.question(texto, resolve));
+    function jogar(jogador) {
+      const emojis = ["", "🪨", "📄", "✂️"];
+      const computador = Math.floor(Math.random() * 3) + 1;
+      let resultado = "";
 
-    async function jogar() {
-        while (true) {
-            const computador = randomInt(1, 3);
-            console.log("\nSuas opções:");
-            console.log(`[1] ${pedra} Pedra`);
-            console.log(`[2] ${papel} Papel`);
-            console.log(`[3] ${tesoura} Tesoura`);
+      if (jogador === computador) {
+        resultado = "🤝 Empate!";
+      } else if (
+        (jogador === 1 && computador === 3) ||
+        (jogador === 2 && computador === 1) ||
+        (jogador === 3 && computador === 2)
+      ) {
+        resultado = "🥇 Você venceu!";
+        winSound.currentTime = 0;
+        winSound.play();
+      } else {
+        resultado = "💔 Você perdeu!";
+        loseSound.currentTime = 0;
+        loseSound.play();
+      }
 
-            const resposta = await perguntar("Qual é a sua jogada? ");
-            const jogador = parseInt(resposta);
-
-            console.log("JO");
-            await sleep(1000);
-            console.log("KEN");
-            await sleep(1000);
-            console.log("PÔ!!!\n");
-
-             if (![1, 2, 3].includes(jogador)) {
-                console.log("Jogada inválida!");
-                continue;
-            }
-
-            console.log(`Você jogou ${itens[jogador - 1][1]} ${itens[jogador - 1][0]}`);
-            console.log(`Computador jogou ${itens[computador - 1][1]} ${itens[computador - 1][0]}`);
-            
-            if (computador === jogador) {
-                console.log("Empate!");
-                empates++;
-                console.log(`${empateEmoji} Empates: ${empates}`);
-             } else if (
-                (jogador === 1 && computador === 3) ||
-                (jogador === 2 && computador === 1) ||
-                (jogador === 3 && computador === 2)
-            ) {
-                console.log("Você ganhou!");
-                vitorias++;
-                console.log(`${vitoriaEmoji} Vitórias: ${vitorias}`);
-                winSound.currentTime = 0;
-                winSound.play();
-            } else {
-                console.log("Computador ganhou!");
-                derrotas++;
-                console.log(`${derrotaEmoji} Derrotas: ${derrotas}`);
-                loseSound.currentTime = 0;
-                loseSound.play();
-            }
-
-            console.log(`\nPlacar parcial: ${vitorias} Vitórias | ${empates} Empates | ${derrotas} Derrotas\n`);
-
-            while (true) {
-                const resp = (await perguntar("Mais uma partida? [S/N] ")).trim().toUpperCase();
-                if (resp === "S") {
-                    break;
-                } else if (resp === "N") {
-                    console.log("\nObrigado por jogar! Até a próxima.");
-                    console.log("\n(\u{1F3C1}) Placar final:");
-                    console.log(`${vitoriaEmoji} Vitórias: ${vitorias}`);
-                    console.log(`${empateEmoji} Empates: ${empates}`);
-                    console.log(`${derrotaEmoji} Derrotas: ${derrotas}\n`);
-                    rl.close();
-                    return;
-                } else {
-                    console.log("ERRO! Resposta inválida. Por favor, responda com 'S' ou 'N'.");
-                }
-            }
-        }
+      document.getElementById("resultado").innerHTML = `
+        Você escolheu ${emojis[jogador]} <br>
+        O computador escolheu ${emojis[computador]} <br><br>
+        ${resultado}
+      `;
     }
-
-    jogar();
   </script>
 </body>
 </html>
