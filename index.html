@@ -1,202 +1,224 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jogo JOK-E-POW 🎮</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(to right, #4facfe, #00f2fe);
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
-        background-size: cover;
-        background-position: center;
-      }
-
-      .container {
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Jogo.png">
+  <title>Jokenpow</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
+    }
+    .container {
+      text-align: center;
+      background: rgba(250, 151, 4, 0.7);
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      width: 100%;
+      max-width: 400px;
+    }
+    hr {
+        height: 2px;
+        background-color: rgb(252, 251, 255);
+        border-color: rgb(240, 240, 245);
+    }
+    h1 {
+        font-size: 60px;
+        margin-top: 0;
+        margin-bottom: 15px;
         text-align: center;
-        background: rgba(250, 151, 4, 0.7);
-        border-radius: 10px;
-        padding: 40px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        color: #fff;
-        width: 100%;
-        max-width: 400px;
-      }
-
-      h1 {
-        font-size: 2.2em;
-        margin-bottom: 10px;
-        color: #ffdd57;
-      }
-
-      h2 {
-        font-size: 1.5em;
-        margin-bottom: 20px;
-        color: #fff;
-      }
-
-      input[type="number"] {
-        padding: 10px;
-        font-size: 1.2em;
-        width: 80%;
-        margin-bottom: 20px;
-        border: none;
-        border-radius: 5px;
-        text-align: center;
-      }
-
-      button {
-        background-color: #ff6f61;
-        color: white;
-        padding: 15px 30px;
-        font-size: 1.2em;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin: 5px;
-      }
-
-      button:hover {
-        background-color: #ff8c7b;
-      }
-
-      #resultado {
-        margin-top: 20px;
-        font-size: 1.5em;
-        font-weight: bold;
-        color: #ffdd57;
-      }
-
-      footer {
-        margin-top: 30px;
-        font-size: 0.9em;
-        color: #ddd;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="container">
-      <audio id="bgm" loop>
-        <source src="media/music.mp3" type="audio/mpeg" />
-      </audio>
-
-      <h1>🎮 JOK-E-POW</h1>
-      <h2>🔥 Preparado para o duelo!</h2>
-      <h3>Vamos jogar!</h3>
-
-      <p><strong>Escolha seu golpe com sabedoria:</strong></p>
-      <p>1 = Papel 📄</p>
-      <p>2 = Pedra 🪨</p>
-      <p>3 = Tesoura ✂️</p>
-
-      <p><strong>⚔️ Regras do combate:</strong></p>
-      <p>Papel embrulha a pedra 📄🪨</p>
-      <p>Pedra esmaga a tesoura 🪨✂️</p>
-      <p>Tesoura corta o papel ✂️📄</p>
-
-      <button onclick="startGame()">🎵 Tocar Música</button>
-      <button onclick="jogar()">🎯 Começar Jogo</button>
-
-      <div id="resultado"></div>
-
-      <footer>
-        <p>👩‍💻 Criadora: <strong>Sabrina Rodrigues</strong></p>
-      </footer>
+    }
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #ffdd57;
+    }
+    h3, p {
+        margin: 1em auto;
+    color: white;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 1.2em;
+      width: 80%;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+    }
+    button {
+      background-color: #ff6f61;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #ff8c7b;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ffdd57;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <audio id="music" src="media/music.mp3" loop type="audio/mpeg" /></audio>
+    <audio id="winSound" src="media/win.mp3" type="audio/mpeg" /></audio>
+    <audio id="loseSound" src="media/lose.mp3" type="audio/mpeg" /></audio>
+  
+    <h1>&#x1F3AE; JOK-E-POW</h1>
+    <h2>&#x1F525; Preparado para o duelo!</h2>
+    <hr>
+      <p>Escolha seu golpe com sabedoria:</p>
+      <p>1 = Pedra&#x1FAA8;</p>
+      <p>2 = Papel&#x1F4C4;</p>      
+      <p>3 = Tesoura&#x2702;</p>    
+    <hr>
+     <p><strong>&#x2694;&#xFE0FRegras do combate:</strong></p>
+      <p>Papel embrulha a pedra&#x1F4C4;&#x1FAA8;</p>
+      <p>Pedra esmaga a tesoura&#x1FAA8;&#x2702;</p>
+      <p>Tesoura corta o papel&#x2702;&#x1F4C4;</p>
+    <hr>
+    <h3>Vamos jogar!</h3>
+    <button onclick="jogar(1)">("\u{1FAA8}"); Pedra</button>
+    <button onclick="jogar(2)">("\u{1F4C4}"); Papel</button>
+    <button onclick="jogar(3)">"(\u2702)"; Tesoura</button>
+  
+    <div id="resultado"></div>
+    <footer>
+    <h3>Divirta se!</h3>
+    <p>\U0001F60E SABRINA RODRIGUES \U0001F60E</p>
+    </footer>
     </div>
 
-    <script>
-      function startGame() {
-        const audio = document.getElementById("bgm");
-        audio.play();
-        alert("🎶 Música iniciada! Boa sorte no duelo!");
-      }
+  <script>
+    const readline = require("readline");
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
 
-      const pedra = "🪨";
-      const papel = "📄";
-      const tesoura = "✂️";
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const pedra = ("\u{1FAA8}");
+    const papel = ("\u{1F4C4}");
+    const tesoura = "(\u2702)";
+    const vitoriaEmoji = "(\u{1F947})";
+    const empateEmoji = "(\u{1F91D})";
+    const derrotaEmoji = "(\u{1F494})";
 
-      const vitoriaEmoji = "🥇";
-      const empateEmoji = "🤝";
-      const derrotaEmoji = "💔";
+    const itens = [
+        ["Pedra", pedra],
+        ["Papel", papel],
+        ["Tesoura", tesoura]
+    ];
 
-      const itens = [
-        { nome: "Pedra", emoji: pedra },
-        { nome: "Papel", emoji: papel },
-        { nome: "Tesoura", emoji: tesoura },
-      ];
+    let empates = 0;
+    let vitorias = 0;
+    let derrotas = 0;
 
-      let vitorias = 0;
-      let empates = 0;
-      let derrotas = 0;
+    let music = document.getElementById("music");
+    let winSound = document.getElementById("winSound");
+    let loseSound = document.getElementById("loseSound");
 
-      function sleep(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
+     document.body.addEventListener("click", () => {
+      if (music.paused) music.play();
+    }, { once: true });
 
-      async function jogar() {
+    const perguntar = (texto) => new Promise(resolve => rl.question(texto, resolve));
+
+    async function jogar() {
         while (true) {
-          const jogador = parseInt(
-            prompt(
-              `Suas opções:\n[1] ${pedra} Pedra\n[2] ${papel} Papel\n[3] ${tesoura} Tesoura\n\nQual é a sua jogada?`
-            )
-          );
+            const computador = randomInt(1, 3);
+            console.log("\nSuas opções:");
+            console.log(`[1] ${pedra} Pedra`);
+            console.log(`[2] ${papel} Papel`);
+            console.log(`[3] ${tesoura} Tesoura`);
 
-          if (![1, 2, 3].includes(jogador)) {
-            alert("🚫 Jogada inválida! Escolha 1, 2 ou 3.");
-            continue;
-          }
+            const resposta = await perguntar("Qual é a sua jogada? ");
+            const jogador = parseInt(resposta);
 
-          const computador = Math.floor(Math.random() * 3) + 1;
+            console.log("JO");
+            await sleep(1000);
+            console.log("KEN");
+            await sleep(1000);
+            console.log("PÔ!!!\n");
 
-          alert("JO!");
-          await sleep(800);
-          alert("KEN!");
-          await sleep(800);
-          alert("PÔ!!!");
+             if (![1, 2, 3].includes(jogador)) {
+                console.log("Jogada inválida!");
+                continue;
+            }
 
-          alert(
-            `Você jogou ${itens[jogador - 1].emoji} ${itens[jogador - 1].nome}`
-          );
-          alert(
-            `Computador jogou ${itens[computador - 1].emoji} ${itens[computador - 1].nome}`
-          );
+            console.log(`Você jogou ${itens[jogador - 1][1]} ${itens[jogador - 1][0]}`);
+            console.log(`Computador jogou ${itens[computador - 1][1]} ${itens[computador - 1][0]}`);
+            
+            if (computador === jogador) {
+                console.log("Empate!");
+                empates++;
+                console.log(`${empateEmoji} Empates: ${empates}`);
+             } else if (
+                (jogador === 1 && computador === 3) ||
+                (jogador === 2 && computador === 1) ||
+                (jogador === 3 && computador === 2)
+            ) {
+                console.log("Você ganhou!");
+                vitorias++;
+                console.log(`${vitoriaEmoji} Vitórias: ${vitorias}`);
+                winSound.currentTime = 0;
+                winSound.play();
+            } else {
+                console.log("Computador ganhou!");
+                derrotas++;
+                console.log(`${derrotaEmoji} Derrotas: ${derrotas}`);
+                loseSound.currentTime = 0;
+                loseSound.play();
+            }
 
-          if (jogador === computador) {
-            alert(`${empateEmoji} Empate!`);
-            empates++;
-          } else if (
-            (jogador === 1 && computador === 3) ||
-            (jogador === 2 && computador === 1) ||
-            (jogador === 3 && computador === 2)
-          ) {
-            alert(`${vitoriaEmoji} Você venceu!`);
-            vitorias++;
-          } else {
-            alert(`${derrotaEmoji} Computador venceu!`);
-            derrotas++;
-          }
+            console.log(`\nPlacar parcial: ${vitorias} Vitórias | ${empates} Empates | ${derrotas} Derrotas\n`);
 
-          const continuar = prompt("Quer jogar novamente? [S/N]").toUpperCase();
-          if (continuar === "N") {
-            alert("🏁 Fim de jogo! Obrigado por jogar 💕");
-            alert(
-              `Placar final:\n${vitoriaEmoji} Vitórias: ${vitorias}\n${empateEmoji} Empates: ${empates}\n${derrotaEmoji} Derrotas: ${derrotas}`
-            );
-            break;
-          } else if (continuar !== "S") {
-            alert("Por favor, responda apenas com S ou N 💬");
-          }
+            while (true) {
+                const resp = (await perguntar("Mais uma partida? [S/N] ")).trim().toUpperCase();
+                if (resp === "S") {
+                    break;
+                } else if (resp === "N") {
+                    console.log("\nObrigado por jogar! Até a próxima.");
+                    console.log("\n(\u{1F3C1}) Placar final:");
+                    console.log(`${vitoriaEmoji} Vitórias: ${vitorias}`);
+                    console.log(`${empateEmoji} Empates: ${empates}`);
+                    console.log(`${derrotaEmoji} Derrotas: ${derrotas}\n`);
+                    rl.close();
+                    return;
+                } else {
+                    console.log("ERRO! Resposta inválida. Por favor, responda com 'S' ou 'N'.");
+                }
+            }
         }
-      }
-    </script>
-  </body>
+    }
+
+    jogar();
+  </script>
+</body>
 </html>
