@@ -1,151 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Jogo.png">
-  <title>Jokenpow</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
-      background-size: cover;
-    }
-    .container {
-      text-align: center;
-      background: rgba(250, 151, 4, 0.7);
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      color: #fff;
-      width: 100%;
-      max-width: 400px;
-    }
-    hr {
-      height: 2px;
-      background-color: rgb(252, 251, 255);
-      border-color: rgb(240, 240, 245);
-    }
-    h1 {
-      font-size: 60px;
-      margin-top: 0;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      color: #ffdd57;
-    }
-    h3, p {
-      margin: 1em auto;
-      color: white;
-    }
-    button {
-      background-color: #ff6f61;
-      color: white;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 8px;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #ff8c7b;
-    }
-    #resultado {
-      margin-top: 20px;
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #ffdd57;
-    }
-    footer {
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #ddd;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    
-    <audio id="music" src="media/music.mp3" loop></audio>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Jogo.png">
+    <title>Jogo de Adivinhação</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/Papel%20pedra%20tesoura.png");
+        background-size: cover;
+        min-height: 100px;
+ 
+      }
+      .container {
+        text-align: center;
+        background: rgba(250, 151, 4, 0.7);
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        color: #fff;
+        width: 100%;
+        max-width: 400px;
+      }
+      h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: #ffdd57;
+      }
+      input[type="number"] {
+        padding: 10px;
+        font-size: 1.2em;
+        width: 80%;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+      }
+      button {
+        background-color: #ff6f61;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #ff8c7b;
+      }
+      #resultado {
+        margin-top: 20px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ffdd57;
+      }
+      footer {
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+       <audio id="bgm" loop>
+      <source src="media/music.mp3" type="audio/mpeg" />
+    </audio>
     <audio id="winSound" src="media/win.mp3"></audio>
     <audio id="loseSound" src="media/lose.mp3"></audio>
-  
-    <h1>🎮 JOK-E-POW</h1>
-    <h2>🔥 Preparado para o duelo!</h2>
-    <hr>
-    <p>Escolha seu golpe com sabedoria:</p>
-    <p>1 = Pedra 🪨</p>
-    <p>2 = Papel 📄</p>
-    <p>3 = Tesoura ✂️</p>
-    <hr>
-    <p><strong>⚔️ Regras do combate:</strong></p>
-    <p>Papel embrulha a pedra 📄🪨</p>
-    <p>Pedra esmaga a tesoura 🪨✂️</p>
-    <p>Tesoura corta o papel ✂️📄</p>
-    <hr>
-    <h3>Vamos jogar!</h3>
+    <button onclick="startGame()">&#x1F3AE; Começar Jogo</button>
+      <h1>&#x1F3AE; JOK-E-POW</h1>
+      <h2>&#x1F525; Preparado para o duelo!</h2>
+      <p>Vamos jogar!</p>
+      <p>Escolha seu golpe com sabedoria:</p>
+      <p>1 = Papel&#x1F4C4;</p>      
+      <p>2 = Pedra&#x1FAA8;</p>
+      <p>3 = Tesoura&#x2702;</p>  
+      <br    
+      <p><strong>&#x2694;&#xFE0FRegras do combate:</strong></p>
+      <p>Papel embrulha a pedra&#x1F4C4;&#x1FAA8;</p>
+      <p>Pedra esmaga a tesoura&#x1FAA8;&#x2702;</p>
+      <p>Tesoura corta o papel&#x2702;&#x1F4C4;</p>
+      <input type="number" id="palpite" min="1" max="10" />
+      <button onclick="enviarPalpite()">Enviar</button>
+      <div id="resultado"></div>
+      <footer>
+        <h3>Divirta se!</h3>
+        <p>Criadora Sabrina Rodrigues</p>
+      </footer>
+    </div>
 
-    <button onclick="jogar(1)">🪨 Pedra</button>
-    <button onclick="jogar(2)">📄 Papel</button>
-    <button onclick="jogar(3)">✂️ Tesoura</button>
-  
-    <div id="resultado"></div>
+    <script>
+      function enviarPalpite() {
+        const palpite = document.getElementById("palpite").value;
 
-    <footer>
-      <h3>Divirta-se!</h3>
-      <p>😎 SABRINA RODRIGUES 😎</p>
-    </footer>
-  </div>
+        // Substitua pela URL real da sua API
+        const url = "https://sbr-rodrigues.github.io/Jogo-jokepow/" + encodeURIComponent(palpite);
 
-  <script>
-    const music = document.getElementById("music");
-    const winSound = document.getElementById("winSound");
-    const loseSound = document.getElementById("loseSound");
-
-    // Toca a música de fundo ao primeiro clique
-    document.body.addEventListener("click", () => {
-      if (music.paused) music.play();
-    }, { once: true });
-
-    function jogar(jogador) {
-      const emojis = ["", "🪨", "📄", "✂️"];
-      const computador = Math.floor(Math.random() * 3) + 1;
-      let resultado = "";
-
-      if (jogador === computador) {
-        resultado = "🤝 Empate!";
-      } else if (
-        (jogador === 1 && computador === 3) ||
-        (jogador === 2 && computador === 1) ||
-        (jogador === 3 && computador === 2)
-      ) {
-        resultado = "🥇 Você venceu!";
-        winSound.currentTime = 0;
-        winSound.play();
-      } else {
-        resultado = "💔 Você perdeu!";
-        loseSound.currentTime = 0;
-        loseSound.play();
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro na resposta  o servidor");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            document.getElementById("resultado").innerText =
+              "Resultado: " + data.resultado;
+          })
+          .catch((error) => {
+            document.getElementById("resultado").innerText =
+              "Erro ao comunicar com o servidor.";
+            console.error(error);
+          });
       }
-
-      document.getElementById("resultado").innerHTML = `
-        Você escolheu ${emojis[jogador]} <br>
-        O computador escolheu ${emojis[computador]} <br><br>
-        ${resultado}
-      `;
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
