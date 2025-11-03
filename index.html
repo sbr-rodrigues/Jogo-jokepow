@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/media/jokepow.jpg">
+  <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/jokepow.jpg">
   <title>Jokenpow</title>
   <style>
     body {
@@ -15,7 +15,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/refs/heads/main/media/Papel%20pedra%20tesoura.png");
+      background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/Papel%20pedra%20tesoura.png");
       background-size: cover;
     }
     .container {
@@ -77,13 +77,12 @@
 </head>
 <body>
   <div class="container">
-    
     <audio id="music" src="media/music.mp3" loop></audio>
     <audio id="winSound" src="media/win.mp3"></audio>
     <audio id="loseSound" src="media/lose.mp3"></audio>
-  
+
     <h1>JOK-E-POW</h1>
-    <h2> reparado para o duelo!</h2>
+    <h2>Preparado(a) para o duelo!</h2>
     <hr>
     <p><strong>⚔️ Regras do combate:</strong></p>
     <p>Papel embrulha a pedra 📄🪨</p>
@@ -95,11 +94,10 @@
     <button onclick="jogar(1)">🪨 Pedra</button>
     <button onclick="jogar(2)">📄 Papel</button>
     <button onclick="jogar(3)">✂️ Tesoura</button>
-  
+
     <div id="resultado"></div>
     <div id="placar"></div>
     <div id="continuar"></div>
-
 
     <footer>
       <h3>Divirta-se!</h3>
@@ -112,7 +110,6 @@
     const winSound = document.getElementById("winSound");
     const loseSound = document.getElementById("loseSound");
 
-   
     document.body.addEventListener("click", () => {
       if (music.paused) music.play();
     }, { once: true });
@@ -145,18 +142,21 @@
         O computador escolheu ${emojis[computador]} <br><br>
         ${resultado}
       `;
-       function continuar(decisao) {
+
+      continuar();
+    }
+
+    function continuar(decisao) {
       const continuarDiv = document.getElementById("continuar");
       const resultadoDiv = document.getElementById("resultado");
 
-      document.getElementById("continuar").innerHTML = `
-        <p>Deseja jogar novamente?</p>
-        <button onclick="continuar(true)">✅ Sim</button>
-        <button onclick="continuar(false)">❌ Não</button>
-      `;
-    }
-
-      if (decisao) {
+      if (decisao === undefined) {
+        continuarDiv.innerHTML = `
+          <p>Deseja jogar novamente?</p>
+          <button onclick="continuar(true)">✅ Sim</button>
+          <button onclick="continuar(false)">❌ Não</button>
+        `;
+      } else if (decisao) {
         music.pause();
         music.currentTime = 0;
         resultadoDiv.innerHTML = "";
