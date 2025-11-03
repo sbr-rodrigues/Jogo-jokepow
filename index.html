@@ -82,13 +82,8 @@
     <audio id="winSound" src="media/win.mp3"></audio>
     <audio id="loseSound" src="media/lose.mp3"></audio>
   
-    <h1>🎮 JOK-E-POW</h1>
-    <h2>🔥 Preparado para o duelo!</h2>
-    <hr>
-    <p>Escolha seu golpe com sabedoria:</p>
-    <p>1 = Pedra 🪨</p>
-    <p>2 = Papel 📄</p>
-    <p>3 = Tesoura ✂️</p>
+    <h1>JOK-E-POW</h1>
+    <h2> reparado para o duelo!</h2>
     <hr>
     <p><strong>⚔️ Regras do combate:</strong></p>
     <p>Papel embrulha a pedra 📄🪨</p>
@@ -102,6 +97,9 @@
     <button onclick="jogar(3)">✂️ Tesoura</button>
   
     <div id="resultado"></div>
+    <div id="placar"></div>
+    <div id="continuar"></div>
+
 
     <footer>
       <h3>Divirta-se!</h3>
@@ -126,7 +124,7 @@
 
       if (jogador === computador) {
         resultado = "🤝 Empate!";
-        music.volume = 0.4;
+        music.volume = 0.2;
         music.play();
       } else if (
         (jogador === 1 && computador === 3) ||
