@@ -84,23 +84,23 @@
     <h1>JOK-E-POW</h1>
     <h2>Preparado(a) para o duelo!</h2>
     <hr>
-    <p><strong>⚔️ Regras do combate:</strong></p>
-    <p>Papel embrulha a pedra 📄🪨</p>
-    <p>Pedra esmaga a tesoura 🪨✂️</p>
-    <p>Tesoura corta o papel ✂️📄</p>
+    <h2><strong>⚔️ Regras do combate:</strong></h2>
+    <h3>Papel embrulha a pedra 📄🪨</h3>
+    <h3>Pedra esmaga a tesoura 🪨✂️</h3>
+    <h3>Tesoura corta o papel ✂️📄</h3>
     <hr>
-    <h3>Vamos jogar!</h3>
+    <h2>Vamos jogar!</h2>
 
-    <button onclick="jogar(1)">🪨 Pedra</button>
-    <button onclick="jogar(2)">📄 Papel</button>
-    <button onclick="jogar(3)">✂️ Tesoura</button>
+    <button class="jogada" onclick="jogar(1)">🪨 Pedra</button>
+    <button class="jogada" onclick="jogar(2)">📄 Papel</button>
+    <button class="jogada" onclick="jogar(3)">✂️ Tesoura</button>
 
     <div id="resultado"></div>
     <div id="placar"></div>
     <div id="continuar"></div>
 
     <footer>
-      <h3>Divirta-se!</h3>
+      <h2>Divirta-se!</h2>
       <p>😎 SABRINA RODRIGUES 😎</p>
     </footer>
   </div>
@@ -113,50 +113,55 @@
     let vitorias = 0;
     let empates = 0;
     let derrotas = 0;
+    let podeJogar = true;
 
     document.body.addEventListener("click", () => {
       if (music.paused) music.play();
     }, { once: true });
 
     function jogar(jogador) {
-      const emojis = ["", "🪨", "📄", "✂️"];
-      const computador = Math.floor(Math.random() * 3) + 1;
-      let resultado = "";
+  if (!podeJogar) return; 
 
-      if (jogador === computador) {
-        resultado = "🤝 Empate!";
-        empates++;
-        music.volume = 0.2;
-        music.play();
-      } else if (
-        (jogador === 1 && computador === 3) ||
-        (jogador === 2 && computador === 1) ||
-        (jogador === 3 && computador === 2)
-      ) {
-        resultado = "🥇 Você venceu!";
-        vitorias++;
-        winSound.currentTime = 0;
-        winSound.play();
-      } else {
-        resultado = "💔 Você perdeu!";
-        derrotas++;
-        loseSound.currentTime = 0;
-        loseSound.play();
-      }
+  podeJogar = false; 
 
-      document.getElementById("resultado").innerHTML = `
-        Você escolheu ${emojis[jogador]} <br>
-        O computador escolheu ${emojis[computador]} <br><br>
-        ${resultado}
-      `;
+  const emojis = ["", "🪨", "📄", "✂️"];
+  const computador = Math.floor(Math.random() * 3) + 1;
+  let resultado = "";
 
-      continuar(); 
-    }
+  if (jogador === computador) {
+    resultado = "🤝 Empate!";
+    empates++;
+    music.volume = 0.2;
+    music.play();
+  } else if (
+    (jogador === 1 && computador === 3) ||
+    (jogador === 2 && computador === 1) ||
+    (jogador === 3 && computador === 2)
+  ) {
+    resultado = "🥇 Você venceu!";
+    vitorias++;
+    winSound.currentTime = 0;
+    winSound.play();
+  } else {
+    resultado = "💔 Você perdeu!";
+    derrotas++;
+    loseSound.currentTime = 0;
+    loseSound.play();
+  }
 
-    function continuar(decisao) {
+  document.getElementById("resultado").innerHTML = `
+    Você escolheu ${emojis[jogador]} <br>
+    O computador escolheu ${emojis[computador]} <br><br>
+    ${resultado}
+  `;
+
+  continuar(); 
+}
+      function continuar(decisao) {
       const continuarDiv = document.getElementById("continuar");
       const resultadoDiv = document.getElementById("resultado");
       const placarDiv = document.getElementById("placar");
+   
 
       if (decisao === undefined) {
         continuarDiv.innerHTML = `
@@ -164,13 +169,14 @@
           <button onclick="continuar(true)">✅ Sim</button>
           <button onclick="continuar(false)">❌ Não</button>
         `;
-      } else if (decisao) {
+        } else if (decisao) {
+        podeJogar = true; // Libera jogada
         music.pause();
         music.currentTime = 0;
         resultadoDiv.innerHTML = "";
         continuarDiv.innerHTML = "";
         placarDiv.innerHTML = "";
-      } else {
+        } else {
         resultadoDiv.innerHTML = "🏁 Obrigado por jogar, até a próxima!";
         continuarDiv.innerHTML = "";
         music.pause();
