@@ -117,12 +117,15 @@
     let derrotas = 0;
     let podeJogar = true;
 
-   window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
   music.volume = 0.2;
   music.play().catch(() => {
-     document.body.addEventListener("click", () => {
+    // Se o navegador bloquear, o clique ainda ativa depois
+    document.body.addEventListener("click", () => {
       music.play();
     }, { once: true });
+  });
+});
 
     function jogar(jogador) {
   if (!podeJogar) return; 
@@ -198,4 +201,5 @@
   </script>
 </body>
 </html>
+
 
