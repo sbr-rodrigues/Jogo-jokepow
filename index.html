@@ -6,28 +6,37 @@
   <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/jokepow.jpg">
   <title>Jokenpow</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
+    html, body {
       margin: 0;
       padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      height: 100%;
+      overflow: hidden; /* remove a barra de rolagem */
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
       background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/Papel%20pedra%20tesoura.png");
       background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
     .container {
       text-align: center;
-      background: rgba(250, 151, 4, 0.7);
-      border-radius: 10px;
-      padding: 40px;
+      background: rgba(250, 151, 4, 0.8);
+      border-radius: 15px;
+      padding: 20px 30px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       color: #fff;
-      width: 100%;
-      max-width: 400px;
+      width: 90%;
+      max-width: 420px;
+      height: 90vh; /* ocupa quase toda a tela */
+      overflow-y: auto; /* só ativa rolagem interna se precisar */
     }
+
     hr {
       height: 2px;
       background-color: rgb(252, 251, 255);
@@ -72,6 +81,25 @@
       margin-top: 30px;
       font-size: 0.9em;
       color: #ddd;
+    }
+     #sound-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      display: none;
+    }
+
+    #sound-btn:hover {
+      background-color: #ff8c7b;
     }
   </style>
 </head>
@@ -118,19 +146,20 @@
     let podeJogar = true;
 
 window.addEventListener("DOMContentLoaded", () => {
-  music.volume = 0.2;
-  music.muted = true;
-  music.play().then(() => {
-   
-    setTimeout(() => music.muted = false, 1000);
-  }).catch(() => {
-   
-    document.body.addEventListener("click", () => {
+      music.volume = 0.2;
+      music.muted = true;
+      music.play().then(() => {
+        setTimeout(() => music.muted = false, 1000);
+      }).catch(() => {
+        soundBtn.style.display = "block";
+      });
+    });
+
+    soundBtn.addEventListener("click", () => {
       music.muted = false;
       music.play();
-    }, { once: true });
-  });
-});
+      soundBtn.remove();
+    });
     
 function jogar(jogador) {
   if (!podeJogar) return;
@@ -208,6 +237,7 @@ function continuar(decisao) {
   </script>
 </body>
 </html>
+
 
 
 
