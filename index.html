@@ -6,42 +6,67 @@
   <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/jokepow.jpg">
   <title>Jokenpow</title>
   <style>
-    html, body {
+      * {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden; /* remove a barra de rolagem */
-      font-family: 'Arial', sans-serif;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    body {
-      background: linear-gradient(to right, #4facfe, #00f2fe);
+      html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden; 
       background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/Papel%20pedra%20tesoura.png");
       background-size: cover;
       background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-repeat: no-repeat;
     }
 
-    .container {
+       .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh; 
+      justify-content: space-between;
+      color: white;
+    }
+
+     header {
       text-align: center;
       background: rgba(250, 151, 4, 0.8);
-      border-radius: 15px;
-      padding: 20px 30px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      color: #fff;
-      width: 90%;
-      max-width: 420px;
-      height: 90vh; /* ocupa quase toda a tela */
-      overflow-y: auto; /* só ativa rolagem interna se precisar */
+      padding: 15px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    hr {
-      height: 2px;
-      background-color: rgb(252, 251, 255);
-      border-color: rgb(240, 240, 245);
+    header h1 {
+      font-size: 3em;
+      letter-spacing: 2px;
     }
+
+    header p {
+      font-size: 1.3em;
+      margin-top: 5px;
+    }
+     main {
+      display: flex;
+      justify-content: space-around;
+      align-items: stretch;
+      flex: 1;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .left, .right {
+      flex: 1;
+      background-color: rgba(255, 165, 0, 0.8);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
     h1 {
       font-size: 60px;
       margin-top: 0;
@@ -49,95 +74,139 @@
       text-align: center;
     }
     h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      color: #ffdd57;
+      margin-bottom: 10px;
+      color: #fff;
+      text-align: center;
     }
+
     h3, p {
       margin: 1em auto;
       color: white;
     }
+
+    .regras p, .jogo p {
+      margin: 5px 0;
+      text-align: center;
+      font-weight: 500;
+    }
+
     button {
-      background-color: #ff6f61;
-      color: white;
-      padding: 15px 30px;
-      font-size: 1.2em;
+      background-color: #ff7675;
+      color: #fff;
       border: none;
-      border-radius: 5px;
+      padding: 12px 25px;
+      margin: 5px;
+      border-radius: 10px;
       cursor: pointer;
-      margin: 8px;
-      transition: background-color 0.3s ease;
+      transition: 0.3s;
+      font-size: 1em;
     }
+
     button:hover {
-      background-color: #ff8c7b;
+      background-color: #ff5555;
     }
-    #resultado {
-      margin-top: 20px;
-      font-size: 1.5em;
+
+    .resultado {
+      text-align: center;
       font-weight: bold;
+      margin-top: 10px;
       color: #ffdd57;
     }
-    footer {
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #ddd;
+
+    .placar, .continuar {
+      text-align: center;
     }
-     #sound-btn {
+
+      footer {
+      text-align: center;
+      background: rgba(250, 151, 4, 0.8);
+      padding: 10px 0;
+      font-weight: 500;
+      font-size: 1em;
+      letter-spacing: 1px;
+      box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
+    }
+
+   #btnSom {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background-color: #ff6f61;
-      color: #fff;
+      background-color: #ff7675;
+      color: white;
       border: none;
+      padding: 10px 15px;
       border-radius: 10px;
-      padding: 12px 18px;
-      font-size: 16px;
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      font-size: 16px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
       z-index: 1000;
       display: none;
     }
 
-    #sound-btn:hover {
-      background-color: #ff8c7b;
+    #btnSom:hover {
+      background-color: #ff5555;
     }
+
   </style>
 </head>
 <body>
   <div class="container">
-    <audio id="music" src="media/music.mp3" loop></audio>
+    
+        <header>
+      <h1>Jokenpô</h1>
+      <h2>Preparado(a) para o duelo?</h2>
+    </header>
+   
+       <main>
+      <section class="left">
+        <div class="regras">
+          <h2><strong>⚔️ Regras do combate:</strong></h2>
+          <p>📄 Papel embrulha a pedra 🪨</p>
+          <p>🪨 Pedra esmaga a tesoura ✂️</p>
+          <p>✂️ Tesoura corta o papel 📄</p>
+        </div>
+
+         <div class="jogo">
+          <h2>Vamos jogar!</h2>
+          <button>🪨 Pedra</button>
+          <button>📄 Papel</button>
+          <button>✂️ Tesoura</button>
+          <p class="resultado">Resultado aqui...</p>
+        </div>
+      </section>
+    
+  <section class="right">
+        <div class="continuar">
+          <h2>Deseja continuar?</h2>
+          <button>✅ Sim</button>
+          <button>❌ Não</button>
+        </div>
+
+      <div class="placar">
+          <h2>📊 Placar</h2>
+          <p>Vitórias: 0</p>
+          <p>Empates: 0</p>
+          <p>Derrotas: 0</p>
+        </div>
+      </section>
+    </main>
+
+     <footer>
+      ✨ Divirta-se! | Criadora: Sabrina Barbosa 😎
+    </footer>
+  </div> 
+   
+  
     <audio id="empateSound" src="media/empate.mp3"></audio>
     <audio id="winSound" src="media/win.mp3"></audio>
     <audio id="loseSound" src="media/lose.mp3"></audio>
+    <audio id="music" src="media/music.mp3" loop></audio>
+    <button id="btnSom">🔊 Ativar som</button>
 
-    <h1>JOK-E-POW</h1>
-    <h2>Preparado(a) para o duelo!</h2>
-    <hr>
-    <h2><strong>⚔️ Regras do combate:</strong></h2>
-    <h3>Papel embrulha a pedra 📄🪨</h3>
-    <h3>Pedra esmaga a tesoura 🪨✂️</h3>
-    <h3>Tesoura corta o papel ✂️📄</h3>
-    <hr>
-    <h2>Vamos jogar!</h2>
-
-    <button class="jogada" onclick="jogar(1)">🪨 Pedra</button>
-    <button class="jogada" onclick="jogar(2)">📄 Papel</button>
-    <button class="jogada" onclick="jogar(3)">✂️ Tesoura</button>
-
-    <div id="resultado"></div>
-    <div id="placar"></div>
-    <div id="continuar"></div>
-
-    <footer>
-      <h2>Divirta-se!</h2>
-      <p>😎 SABRINA RODRIGUES 😎</p>
-    </footer>
-  </div>
-
-   <button id="sound-btn">🔊 Ativar Som</button>
-  
   <script>
+
     const music = document.getElementById("music");
+    const btnSom = document.getElementById("btnSom");
     const empateSound = document.getElementById("empateSound");
     const winSound = document.getElementById("winSound");
     const loseSound = document.getElementById("loseSound");
@@ -147,20 +216,21 @@
     let derrotas = 0;
     let podeJogar = true;
 
-window.addEventListener("DOMContentLoaded", () => {
-      music.volume = 0.2;
+      window.addEventListener("DOMContentLoaded", () => {
+      music.volume = 0.3;
       music.muted = true;
+    
       music.play().then(() => {
         setTimeout(() => music.muted = false, 1000);
       }).catch(() => {
-        soundBtn.style.display = "block";
+        
+        btnSom.style.display = "block";
+        btnSom.addEventListener("click", () => {
+          music.muted = false;
+          music.play();
+          btnSom.remove();
+        });
       });
-    });
-
-    soundBtn.addEventListener("click", () => {
-      music.muted = false;
-      music.play();
-      soundBtn.remove();
     });
     
 function jogar(jogador) {
@@ -239,11 +309,3 @@ function continuar(decisao) {
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
