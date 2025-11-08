@@ -78,7 +78,7 @@
 <body>
   <div class="container">
     <audio id="music" src="media/music.mp3" loop></audio>
-    <audio id="empate" src="media/empate.mp3"></audio>
+    <audio id="empateSound" src="media/empate.mp3"></audio>
     <audio id="winSound" src="media/win.mp3"></audio>
     <audio id="loseSound" src="media/lose.mp3"></audio>
 
@@ -120,15 +120,16 @@
 window.addEventListener("DOMContentLoaded", () => {
   music.volume = 0.2;
   music.play().catch(() => {
-    // Se o navegador bloquear, o clique ainda ativa depois
     document.body.addEventListener("click", () => {
       music.play();
     }, { once: true });
+  });
+}); 
+    
+function jogar(jogador) {
+  if (!podeJogar) return;
 
-    function jogar(jogador) {
-  if (!podeJogar) return; 
-
-  podeJogar = false; 
+  podeJogar = false;
 
   const emojis = ["", "🪨", "📄", "✂️"];
   const computador = Math.floor(Math.random() * 3) + 1;
@@ -153,7 +154,7 @@ window.addEventListener("DOMContentLoaded", () => {
   } else {
     resultado = "💔 Você perdeu!";
     derrotas++;
-    lose.Sound.volume = 1.0;
+    loseSound.volume = 0.9;
     loseSound.currentTime = 0;
     loseSound.play();
   }
@@ -164,42 +165,44 @@ window.addEventListener("DOMContentLoaded", () => {
     ${resultado}
   `;
 
-  continuar(); 
+  continuar();
 }
-      function continuar(decisao) {
-      const continuarDiv = document.getElementById("continuar");
-      const resultadoDiv = document.getElementById("resultado");
-      const placarDiv = document.getElementById("placar");
-   
-      if (decisao === undefined) {
-        continuarDiv.innerHTML = `
-          <p>Deseja jogar novamente?</p>
-          <button onclick="continuar(true)">✅ Sim</button>
-          <button onclick="continuar(false)">❌ Não</button>
-        `;
-        } else if (decisao) {
-        podeJogar = true; // Libera jogada
-        music.pause();
-        music.currentTime = 0;
-        resultadoDiv.innerHTML = "";
-        continuarDiv.innerHTML = "";
-        placarDiv.innerHTML = "";
-        } else {
-        resultadoDiv.innerHTML = "🏁 Obrigado por jogar, até a próxima!";
-        continuarDiv.innerHTML = "";
-        music.pause();
 
-        placarDiv.innerHTML = `
-          <h3>📊 Placar final:</h3>
-          <p>🥇 Vitórias: ${vitorias}</p>
-          <p>🤝 Empates: ${empates}</p>
-          <p>💔 Derrotas: ${derrotas}</p>
-        `;
-      }
-    }
+function continuar(decisao) {
+  const continuarDiv = document.getElementById("continuar");
+  const resultadoDiv = document.getElementById("resultado");
+  const placarDiv = document.getElementById("placar");
+
+  if (decisao === undefined) {
+    continuarDiv.innerHTML = `
+      <p>Deseja jogar novamente?</p>
+      <button onclick="continuar(true)">✅ Sim</button>
+      <button onclick="continuar(false)">❌ Não</button>
+    `;
+  } else if (decisao) {
+    podeJogar = true;
+    music.pause();
+    music.currentTime = 0;
+    resultadoDiv.innerHTML = "";
+    continuarDiv.innerHTML = "";
+    placarDiv.innerHTML = "";
+  } else {
+    resultadoDiv.innerHTML = "🏁 Obrigado por jogar, até a próxima!";
+    continuarDiv.innerHTML = "";
+    music.pause();
+
+    placarDiv.innerHTML = `
+      <h3>📊 Placar final:</h3>
+      <p>🥇 Vitórias: ${vitorias}</p>
+      <p>🤝 Empates: ${empates}</p>
+      <p>💔 Derrotas: ${derrotas}</p>
+    `;
+  }
+}
   </script>
 </body>
 </html>
+
 
 
 
