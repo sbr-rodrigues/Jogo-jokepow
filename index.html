@@ -11,7 +11,7 @@
       background: linear-gradient(to right, #4facfe, #00f2fe);
       margin: 0;
       padding: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -78,6 +78,7 @@
 <body>
   <div class="container">
     <audio id="music" src="media/music.mp3" loop></audio>
+    <audio id="empate" src="media/empate.mp3"></audio>
     <audio id="winSound" src="media/win.mp3"></audio>
     <audio id="loseSound" src="media/lose.mp3"></audio>
 
@@ -107,6 +108,7 @@
 
   <script>
     const music = document.getElementById("music");
+    const empateSound = document.getElementById("empateSound");
     const winSound = document.getElementById("winSound");
     const loseSound = document.getElementById("loseSound");
 
@@ -115,8 +117,11 @@
     let derrotas = 0;
     let podeJogar = true;
 
-    document.body.addEventListener("click", () => {
-      if (music.paused) music.play();
+   window.addEventListener("DOMContentLoaded", () => {
+  music.volume = 0.2;
+  music.play().catch(() => {
+     document.body.addEventListener("click", () => {
+      music.play();
     }, { once: true });
 
     function jogar(jogador) {
@@ -131,8 +136,9 @@
   if (jogador === computador) {
     resultado = "🤝 Empate!";
     empates++;
-    music.volume = 0.2;
-    music.play();
+    empateSound.volume = 1.0;
+    empateSound.currentTime = 0;
+    empateSound.play();
   } else if (
     (jogador === 1 && computador === 3) ||
     (jogador === 2 && computador === 1) ||
@@ -192,3 +198,4 @@
   </script>
 </body>
 </html>
+
