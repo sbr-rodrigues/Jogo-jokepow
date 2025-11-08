@@ -149,11 +149,13 @@ window.addEventListener("DOMContentLoaded", () => {
   ) {
     resultado = "🥇 Você venceu!";
     vitorias++;
+    winSound.volume = 1.0;
     winSound.currentTime = 0;
     winSound.play();
   } else {
     resultado = "💔 Você perdeu!";
     derrotas++;
+    lose.Sound.volume = 1.0;
     loseSound.currentTime = 0;
     loseSound.play();
   }
@@ -171,7 +173,6 @@ window.addEventListener("DOMContentLoaded", () => {
       const resultadoDiv = document.getElementById("resultado");
       const placarDiv = document.getElementById("placar");
    
-
       if (decisao === undefined) {
         continuarDiv.innerHTML = `
           <p>Deseja jogar novamente?</p>
@@ -201,5 +202,6 @@ window.addEventListener("DOMContentLoaded", () => {
   </script>
 </body>
 </html>
+
 
 
