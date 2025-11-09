@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/jokepow.jpg">
+  <title>Jokenpow</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-image: url("https://raw.githubusercontent.com/sbr-rodrigues/Jogo-jokepow/main/media/Papel%20pedra%20tesoura.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: space-between;
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      background: rgba(250, 151, 4, 0.8);
+      padding: 15px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 3em;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      font-size: 1.3em;
+      margin-top: 5px;
+    }
+
+    main {
+      display: flex;
+      justify-content: space-around;
+      align-items: stretch;
+      flex: 1;
+      padding: 20px;
+      gap: 10px;
+    }
+
+    .right {
+      flex: 1;
+      background-color: rgba(255, 165, 0, 0.8);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Centraliza verticalmente */
+      align-items: center;     /* Centraliza horizontalmente */
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .left {
+      flex: 1;
+      background-color: rgba(255, 165, 0, 0.8);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Centraliza verticalmente */
+      align-items: center;     /* Centraliza horizontalmente */
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .left p {
+      font-size: 1.2em;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #fff;
+      text-align: center;
+      font-size: 2em; /* Título maior */
+      margin-bottom: 15px;
+    }
+    
+    .regras p, .jogo p {
+      margin: 5px 0;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    button {
+      background-color: #ff7675;
+      color: #fff;
+      border: none;
+      font-size: 1.2em;
+      padding: 15px 30px;
+      margin: 5px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff5555;
+    }
+
+    .resultado {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+      color: #ffdd57;
+      font-size: 1.3em;
+    }
+
+    footer {
+      text-align: center;
+      background: rgba(250, 151, 4, 0.8);
+      padding: 10px 0;
+      font-weight: 500;
+      font-size: 1em;
+      letter-spacing: 1px;
+      box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
+    }
+
+    #btnSom {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff7675;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      z-index: 1000;
+      display: none;
+    }
+
+    #btnSom:hover {
+      background-color: #ff5555;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .modal-content {
+      background-color: #222;
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .modal-content h2 {
+      color: #ffdd57;
+      margin-bottom: 20px;
+    }
+
+    .modal button {
+      background-color: #ff6f61;
+      margin: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    #mensagemFinal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 2em;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: fadeIn 1s ease;
+    }
+  </style>
+</head>
+<body>
+  <audio id="music" src="media/music.mp3" loop></audio>
+  <audio id="empateSound" src="media/empate.mp3"></audio>
+  <audio id="winSound" src="media/win.mp3"></audio>
+  <audio id="loseSound" src="media/lose.mp3"></audio>
+
+  <div class="container">
+    <header>
+      <h1><strong>JOK-E-POW</strong></h1>
+      <p>Preparado(a) para o duelo?</p>
+    </header>
+
+    <main>
+      <div class="left">
+        <div class="regras">
+          <h1><strong>⚔️ Regras do Combate</strong></h1>
+          <h2>Papel 📄 embrulha a pedra 🪨</h2>
+          <h2>Pedra 🪨 esmaga a tesoura ✂️</h2>
+          <h2>Tesoura ✂️ corta o papel 📄</h2>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="jogo">
+          <h1><strong>Vamos jogar!</strong></h1>
+          <button class="jogada" onclick="jogar(1)">🪨 Pedra</button>
+          <button class="jogada" onclick="jogar(2)">📄 Papel</button>
+          <button class="jogada" onclick="jogar(3)">✂️ Tesoura</button>
+          <div id="resultado" class="resultado"></div>
+          <br>
+          <button onclick="abrirModal()">🚪 Sair</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <h3>Divirta-se! 😎 Criadora: Sabrina Rodrigues 😎</h3>
+    </footer>
+  </div>
+
+  <button id="btnSom" onclick="ativarSom()">🔊 Ativar Som</button>
+
+
+  <div class="modal" id="modalFinal">
+    <div class="modal-content">
+      <h2>🏁 Placar Final</h2>
+      <p id="placarFinal"></p>
+      <h3>Deseja jogar novamente?</h3>
+      <button onclick="jogarNovamente()">🔁 Jogar novamente</button>
+      <button onclick="encerrarJogo()">❌ Fechar jogo</button>
+    </div>
+  </div>
+
+  <div id="mensagemFinal">
+    <p>🏁 Obrigado(a) por jogar!<br>Até a próxima! 😍</p>
+  </div>
+
+  <script>
+    const music = document.getElementById("music");
+    const empateSound = document.getElementById("empateSound");
+    const winSound = document.getElementById("winSound");
+    const loseSound = document.getElementById("loseSound");
+    const modal = document.getElementById("modalFinal");
+    const placarFinal = document.getElementById("placarFinal");
+    const mensagemFinal = document.getElementById("mensagemFinal");
+    const btnSom = document.getElementById("btnSom");
+
+    let vitorias = 0;
+    let empates = 0;
+    let derrotas = 0;
+    let podeJogar = true;
+
+  
+    window.addEventListener("DOMContentLoaded", () => {
+      music.volume = 0.2;
+      music.play().catch(() => {
+        btnSom.style.display = "block";
+      });
+    });
+
+    function ativarSom() {
+      music.play();
+      btnSom.style.display = "none";
+    }
+
+    function jogar(jogador) {
+      if (!podeJogar) return;
+      const emojis = ["", "🪨", "📄", "✂️"];
+      const computador = Math.floor(Math.random() * 3) + 1;
+      let resultado = "";
+
+      if (jogador === computador) {
+        resultado = "🤝 Empate!";
+        empates++;
+        empateSound.volume = 1.0;
+        empateSound.play();
+      } else if (
+        (jogador === 1 && computador === 3) ||
+        (jogador === 2 && computador === 1) ||
+        (jogador === 3 && computador === 2)
+      ) {
+        resultado = "🥇 Você venceu!";
+        vitorias++;
+        winSound.volume =1.0;
+        winSound.play();
+      } else {
+        resultado = "💔 Você perdeu!";
+        derrotas++;
+        loseSound.volume = 0.9;
+        loseSound.play();
+      }
+
+      document.getElementById("resultado").innerHTML = `
+        Você escolheu ${emojis[jogador]}<br>
+        O computador escolheu ${emojis[computador]}<br><br>
+        ${resultado}
+      `;
+    }
+
+    function abrirModal() {
+      music.pause();
+      placarFinal.innerHTML = `
+        🥇 Vitórias: ${vitorias}<br>
+        🤝 Empates: ${empates}<br>
+        💔 Derrotas: ${derrotas}
+      `;
+      modal.style.display = "flex";
+    }
+
+    function jogarNovamente() {
+      vitorias = empates = derrotas = 0;
+      document.getElementById("resultado").innerHTML = "";
+      modal.style.display = "none";
+      music.currentTime = 0;
+      music.play();
+    }
+
+    function encerrarJogo() {
+      modal.style.display = "none";
+      music.pause();
+      podeJogar = false;
+      document.querySelectorAll(".jogada").forEach(btn => btn.disabled = true);
+      mensagemFinal.style.display = "flex";
+    }
+  </script>
+</body>
+</html>
